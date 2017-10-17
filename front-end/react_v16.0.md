@@ -126,4 +126,39 @@ npm install --save react@^16.0.0 react-dom@^16.0.0
 
 [설치 명령에 대해 조금 더 자세히](https://reactjs.org/docs/installation.html) 알고자 한다면 문서를 참조하라.
 
+*업그레이드*
+React 16이 중요한 내부 변화를 포함하고 있다고 하더라도, 업그레이드 측면에서는 다른 주요 React와 다를 바 없다. 우리는 올 해 초 이후로 Facebook과 Messenger.com 사용자에게 React 16을 제공해 왔고, 여러 번의 beta 버전과 릴리즈 후보 버전을 출시하여 추가 문제들을 해결했다. 자그마한 예외들이 있긴 하지만, *여러분들의 앱에 15.6 에서 아무 오류없이 잘 수행된다면, 16에서도 잘 수행할 것이다.*
 
+*제거 예정 (deprecations)*
+
+서버 렌더링 컨테이너 하이드레이팅(hydrating)에 대한 명확한 API를 제공한다. 따라서, 만약 여러분이 서버에서 렌더한 HTML을 재사용하고자 한다면, `ReactDOM.render` 대신에 `ReactDOM.hydrate`를 사용하라. 만약 단순한 client 측면의 렌더링이라면, `ReactDOM.render`를 유지하라.
+
+*React Addons*
+
+앞서 발표한 것처럼, 우리는 [React Addon의 지원을 중단했다](https://reactjs.org/blog/2017/04/07/react-v15.5.0.html#discontinuing-support-for-react-addons). 우리는 각 addons(`react-addons-perf`를 제외하고; 아래에서 확인하시오.)의 최신 버전이 가까운 미래에도 동작하기를 기대하지만, 그렇다고 추가적인 제시를 하지는 않을 것이다. 
+
+[마이그레이션에 대한 제안 방법](https://reactjs.org/blog/2017/04/07/react-v15.5.0.html#discontinuing-support-for-react-addons)은 이전 발표를 참고하라.
+
+`react-addons-perf`는 React 16에서는 더 이상 동작하지 않는다. 앞으로 이 도구의 새 버전을 출시할 가능성이 크다. 그 때까지는 [React 컴포넌트를 프로파일링하기 위해 브라우저의 성능 도구를 사용할 수 있다](https://reactjs.org/docs/optimizing-performance.html#profiling-components-with-the-chrome-performance-tab). 
+
+*변경 사항 요약*
+
+React 16은 다수의 작은 변경 사항들을 포함한다. 이것들은 오직 보편적이지 않은 경우에만 영향을 미치며, 우리는 이것이 대부분의 앱에 영향이 있다고는 생각하지 않는다.
+
+- React 15에서는 `unstable_handleError`를 사용한 에러 범위에 대하여 제한적이고 문서화되지 않은 지원이 있었다. 이 메서드는 `componentDidCatch`라는 이름으로 변경되었다. 코드 샘플을 사용하여 [새 API로 자동 마이그레이션 할 수 있다](https://github.com/reactjs/react-codemod#error-boundaries).
+
+- `ReactDOM.render`와 `ReactDOM.unstable_renderSubtreeIntoContainer`는 lifecycle 메서드 안에서 호출될 때 null을 반환한다. 이런 현상을 회피하기 위해서 [portals](https://github.com/facebook/react/issues/10309#issuecomment-318433235)와 [refs](https://github.com/facebook/react/issues/10309#issuecomment-318434635)를 사용할 수 있다.
+
+- `setState` :
+-- null로 `setState`를 호출해도 더 이상 업데이트(update)가 트리거되지는 않는다. 만약 재렌더링(re-render)를 하고 싶다면 업데이터(updater) 기능에서 결정할 수 있다.
+-- render에서 `setState`를 직접 호출하는 경우 항상 업데이트(update)가 수행된다. 이것은 이전 버전에서는 수행되지 않았다. 그렇지만, render에서 `setState`를 직접 호출할 때 항상 업데이트가 발생한다 하더라도, render에서 setState를 직접 수행해서는 안 된다.
+-- `setState` 콜백(callback) (두 번째 인자)은 모든 컴포넌트가 렌더링된 후에 수행되던 대신에, `componentDidMount`/`componentDidUpdate` 후에 수행된다. 
+
+- `<A />`를 `<B />`로 대체할 때, `A.componentWillUnmount` 이전에 `B.componentWillMount`가 항상 먼저 수행된다. 이전에는 이런 경우에는 `A.componentWillUnmount`가 수행되었었다.
+
+- 이전에는, 
+
+
+
+
+null로 setState를 호출하면 (자), 더 이상 갱신이 트리거되지 않습니다. 이렇게하면 다시 렌더링하려는 경우 업데이터 기능에서 결정할 수 있습니다. 
