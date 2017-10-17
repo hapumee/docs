@@ -2,7 +2,7 @@
 translated by Hapumee
 
 React v16.0의 릴리즈를 알릴 수 있게 되어 무척 기쁘다. 오랜 요구사항이었던 fragments, error, boundaries, portals를 포함하여
-, 사용자 정의 DOM attrobutes를 지원하고, server-side 렌더링을 개선하며, 파일 사이즈로 감소하였다.
+, 사용자 정의 DOM 속성을 지원하고, server-side 렌더링을 개선하며, 파일 사이즈로 감소하였다.
 
 **render의 새로운 반환 타입: fragments와 strings**
 
@@ -69,7 +69,61 @@ React 16은 완전하게 새로 작성된 서버 renderer가 포함되었다. �
 
 *사용자 정의 DOM 속성의 지원*
 
+기존에는 인식할 수 없는 HTML과 SVG 속성들을 무시였으나, React 16에서는 그것들을 DOM으로 전달한다. 이것은 우리가 React의 허용 속성 목록을 제거하고 파일 사이즈를 줄이는 데에 도움이 되었다.
 
+*감소된 파일 사이즈*
 
+이러한 모든 추가적인 작업에도 불구하고 React 16은 15.6.1 버전에 비하면 사실상 매우 작다.
+
+`react`의 사이즈는 20.7kb(압축의 경우 6.9kb)에서 5.3kb(압축의 경우 2,2kb)로 감소하였다.
+`react-dom`의 사이즈는 141kb(압축의 경우 42.9kb)에서 103.7kb(압축의 경우 32.6kb)로 감소하였다.
+`react`와 `react-dom`을 합치면 그 사이즈는 161.7kb(압축의 경우 49.8kb)에서 109kb(압축의 경우 34.8kb)로 감소하였다.
+
+*이전 버전에 비해 총 파일 사이즈는 32%(압축의 경우 30%) 감소하였다.*
+
+사이즈의 변화는 부분적으로는 패키징의 변화에 따른 것이다. 이제 React는 각각 다른 형태의 대상들에 대해서 플랫 번들(flat bundle)로 생성하기 위해 [Rollup](https://rollupjs.org/)을 사용하는데, 이것으로 인해 사이즈와 런타임 성능이 모두 향상되었다. 플랫 번들(flat bundle) 형식은 또한 React가 번들 사이즈에 미치는 영향이 앱을 제공하는 방식이나 Webpack, Browserify, 선 빌드된 UMD 번들, 또는 다른 시스템에 관계없이 거의 일관적이라는 것을 의미한다. 
+
+*MIT licensed*
+
+[여러분이 혹 놓친 경우에](https://code.facebook.com/posts/300798627056246/relicensing-react-jest-flow-and-immutable-js/), React 16을 MIT license 하에서 사용이 가능하다. 또란, 혹 즉시 업그레이드를 할 수 없는 경우를 대비하여 React 15.6.2를 MIT에 게시하였다. 
+
+*새로운 핵심 구조*
+
+React 16은 "Fiber"라는 코드명의 새로운 핵심 구조를 바탕으로 구축된 React의 첫 번쨰 버전이다. 이 프로젝트에 대한 모든 것은 [Facebook 엔지니어링 블로그](https://code.facebook.com/posts/1716776591680069/react-16-a-look-inside-an-api-compatible-rewrite-of-our-frontend-ui-library/)에서 읽을 수 있다. (스포일러: 우리는 React를 새로 썼다!)
+
+Fiber는 React 16에서 에러 범위나 fragment와 같은 거의 대부분의 새로운 구조를 담당하고 있다. 다음의 몇 릴리즈에서 React의 숨겨진 잠재력을 최대 끌어내기 위한 더 많은 새로운 기능들을 기대할 수 있다.
+
+아마도 우리가 작업하고 있는 가장 흥미로운 부분은 *비동기 렌더링*일 것이다. 말하자면, 브라우저에서 주기적으로 실행함으로써 렌더링 작업을 공동으로 예약하는 전략이다. React는 메인 스레드(main thread)를 차단하지는 않기 떄문에, 결과적으로 비동기 렌더링에서는 애플리케이션의 응답이 향상되었다.
+
+아래의 데모에서 비동기 렌더링으로 해결할 수 있는 문제의 유형에 대해 살펴볼 수 있다.
+
+![async rendering]
+(https://twitter.com/acdlite/status/909926793536094209)
+
+Tip: 우측 상단 회전하는 검은색 사각형의 주의하시오.
+
+우리는 비동기 렌더링은 큰 이슈이며 이것이 React의 미래를 대표한다고 생각한다. 가능한 한 원활하게 v16.0으로 마이그레이션하기 위해서는 비동기 기능들이 아직은 많이 활성화되지는 않았지만 이것들을 곧 출시할 수 있을 것이라 기대해 본다.  
+
+*설치*
+
+npm 레지스트리에 React v16.0.0이 등록되어 있다.
+
+아래는 Yarn을 이용한 React 16 설치 방법이다.
+```javascript
+yarn add react@^16.0.0 react-dom@^16.0.0
+```
+
+아래는 npm을 이용한 React 16 설치 방법이다.
+```javascript
+npm install --save react@^16.0.0 react-dom@^16.0.0
+```
+
+또한, CDN을 통한 React UMD 빌드도 제공한다.
+```javascript
+<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+```
+
+[설치 명령에 대해 조금 더 자세히](https://reactjs.org/docs/installation.html) 알고자 한다면 문서를 참조하라.
 
 
