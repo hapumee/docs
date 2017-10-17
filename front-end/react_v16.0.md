@@ -169,4 +169,53 @@ React 16은 다수의 작은 변경 사항들을 포함한다. 이것들은 오�
 - `ReactDOM.unstable_batchedUpdates`는 이제 콜백 이후 추가적인 인수 하나만 사용한다.
 
 *Packaging*
+- `react/lib/*`와 `react-dom/lib/*`는 더 이상 존재하지 않는다. CommonJS 환경에서조차 React와 ReactDOM은 단일 파일들("플랫 번들(flat bundles)")로 사전 컴파일된다. 만일 여러분이 이전에 문서화되지 않은 React 내부 자료에 의존하고 있고 그것이 더 이상 동작하지 않는다면, 새 이슈에 대해 구체적인 살례를 알려 준다면 우리는 그것을 마이그레이션 전략에 명시화하도록 노력할 것이다.
 
+- `react-with-addons.js`는 더 이상 존재하지 않는다. 모든 호환 addons은 npm에 독립적으로 게시되어 있고 필요한 경우 단일 파일 브라우저 버전이 있다.
+
+- 15.x에서 소개된 deprecations는 핵심 패키지에서 제거되었다. `React.createClass`는 `create_react-class`로, `React.PropType`은 `prop-types`로, `React.DOM`는 `react-dom-factories`으로, `react-addons-test-utils`는 `react-dom/test-utils`로, 그리고 Shallow 렌더러는 `react-test-renderer/shallow`로 사용 가능하다. 
+- 코드와 자동화 한 샘플 코드의 마이그레이션을 위한 지침은 [15.5.0](https://reactjs.org/blog/2017/04/07/react-v15.5.0.html)과 [15.6.0](https://reactjs.org/blog/2017/06/13/react-v15.6.0.html)을 보라.
+
+- 개발과 프로덕트 빌드 사이의 차이점을 강조하기 위해 단일 파일 브라우저 빌드의 이름과 경로가 변경되었다. 예를 들면 아래와 같다.
+-- `react/dist/react.js` → `react/umd/react.development.js`
+-- `react/dist/react.min.js` → `react/umd/react.production.min.js`
+-- `react-dom/dist/react-dom.js` → `react-dom/umd/react-dom.development.js`
+-- `react-dom/dist/react-dom.min.js` → `react-dom/umd/react-dom.production.min.js`
+
+*JavaScript 환경 요구사항*
+
+React 16은 컬렉션 타입 [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)과 [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)에 의존한다. 지원하지 않는 구버전 브라우저(예를 들어, IE < 11)와 디바이스를 지원하려면, `core-j` 또는 `babel-polyfill`과 같은 번들 애플리케이션에 전역 polyfill을 포함하도록 고려해야 한다.
+
+core-j를 사용한 React 16이 구버전 브라우저를 지원하는 polyfill된 환경은 다음과 같을 것이다.
+
+```javascript
+import 'core-js/es6/map';
+import 'core-js/es6/set';
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+ReactDOM.render(
+    <h1>Hello, world!</h1>,
+    document.getElementById('root')
+);
+```
+
+React는 또한 `requestAnimationFrame`에 의존한다 (그것이 테스트 환경일지라도!). 테스트 환경 에서의 간단한 코드는 아래와 같다.
+
+```javascript
+global.requestAnimationFrame = function(callback) {
+    setTimeout(callback, 0);
+};
+```
+
+*감사 인사!*
+
+항상 그렇듯이, 이번 릴리즈도 오픈 소스 기여자들이 없었다면 가능하지 않았을 것이다. 버그를 해결하고 PR을 개설하며 이슈를 해결하고 문서를 작성한 모든 이들에게 감사한다!
+
+홱심 기여자들, 특히 앞선 릴리즈 동안의 지난 몇 주간의 엄청난 열정에 감사한다.: [Brandon Dail](https://twitter.com/aweary), [Jason Quense](https://twitter.com/monasticpanic), [Nathan Hunzaker](https://twitter.com/natehunzaker) 그리고 [Sasha Aickin](https://twitter.com/xander76). 
+
+
+
+
+특별 기고가의 주요 공헌자, 특히 출시 전주기 동안의 지난 몇 주간의 영웅적인 노력에 감사드립니다.
