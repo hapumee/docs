@@ -4,7 +4,7 @@
 React v16.0의 릴리즈를 알릴 수 있게 되어 무척 기쁘다. 오랜 요구사항이었던 fragments, error, boundaries, portals를 포함하여
 , 사용자 정의 DOM 속성을 지원하고, server-side 렌더링을 개선하며, 파일 사이즈로 감소하였다.
 
-**render의 새로운 반환 타입: fragments와 strings**
+### **render의 새로운 반환 타입: fragments와 strings**
 
 컴포넌트의 `render` 메서드에서 엘리먼트로 구성된 배열 타입도 반환할 수 있게 되었다. 다른 배열과 마찬가지로, key 경고를 피하기 위해서 각 엘리먼트에 key를 추가할 필요는 있다.
 
@@ -32,7 +32,7 @@ render() {
 
 [여기에서 지원하는 모든 반환 형태를 확인할 수 있다.](https://reactjs.org/docs/react-component.html#render)
 
-**개선된 오류 처리**
+### **개선된 오류 처리**
 
 기존에는 렌더링 시에 런타임 오류가 발생할 경우, React가 정상 작동을 하지 않고 암호화된 오류 메시지가 표시되면서 페이지를 새로고침해야만 페이지를 복구할 수 있었다. 이 문제를 명확히 하기 위해 React 16에서는 조금 더 탄력적인 오류 처리 전략을 사용한다. 기본적으로 만약 컴포넌트의 render나 lifecycle에 관한 메서드 안에서 오류가 발생한다면, 모든 컴포넌트 트리가 루트(root)에서 분리되게 된다. 이것은 붕괴된 데이터들이 화면에 노출되는 것을 방지한다. 그렇지만 이것 역시 이상적인 사용자 경험은 아니다.
 
@@ -40,7 +40,7 @@ render() {
 
 조금 더 자세한 사항은 [React 16에서의 오류 처리](https://reactjs.org/blog/2017/07/26/error-handling-in-react-16.html)에 관한 문서에서 확인할 수 있다.
 
-**Portals**
+### **Portals**
 
 Portals는 부모 컴포넌트의 DOM 계층구조 밖에 존재하는 DOM 노드에서 자식 요소들을 렌더링 하는 최고 수준의 방법을 제공한다.
 
@@ -57,7 +57,7 @@ render() {
 
 전체 예제는 [protals 문서에서 확인할 수 있다].(https://reactjs.org/docs/portals.html)
 
-**개선된 server-side 렌더링**
+### **개선된 server-side 렌더링**
 
 React 16은 완전하게 새로 작성된 서버 renderer가 포함되었다. 또한 많이 빨라졌다. *streaming*을 지원함으로써 바이트를 조금 더 빠르게 client에 전달할 수 있다. 그리고 `process.env` 체크를 컴파일 하는 [새로운 패키징 전략] 덕분으로 (Node에서 `process.env`를 읽는 것은 정말 느리다!) 더 좋은 서버 렌더링 성능을 얻기 위한 React bundling의 필요가 없어졌다.  
 
@@ -67,11 +67,11 @@ React 16은 완전하게 새로 작성된 서버 renderer가 포함되었다. �
 
 조금 더 자세한 사항은 [ReactDOMServer 문서](https://reactjs.org/docs/react-dom-server.html)에서 확인할 수 있다.
 
-**사용자 정의 DOM 속성의 지원**
+### **사용자 정의 DOM 속성의 지원**
 
 기존에는 인식할 수 없는 HTML과 SVG 속성들을 무시였으나, React 16에서는 그것들을 DOM으로 전달한다. 이것은 우리가 React의 허용 속성 목록을 제거하고 파일 사이즈를 줄이는 데에 도움이 되었다.
 
-**감소된 파일 사이즈**
+### **감소된 파일 사이즈**
 
 이러한 모든 추가적인 작업에도 불구하고 React 16은 15.6.1 버전에 비하면 사실상 매우 작다.
 
@@ -83,11 +83,11 @@ React 16은 완전하게 새로 작성된 서버 renderer가 포함되었다. �
 
 사이즈의 변화는 부분적으로는 패키징의 변화에 따른 것이다. 이제 React는 각각 다른 형태의 대상들에 대해서 플랫 번들(flat bundle)로 생성하기 위해 [Rollup](https://rollupjs.org/)을 사용하는데, 이것으로 인해 사이즈와 런타임 성능이 모두 향상되었다. 플랫 번들(flat bundle) 형식은 또한 React가 번들 사이즈에 미치는 영향이 앱을 제공하는 방식이나 Webpack, Browserify, 선 빌드된 UMD 번들, 또는 다른 시스템에 관계없이 거의 일관적이라는 것을 의미한다. 
 
-**MIT licensed**
+### **MIT licensed**
 
 [여러분이 혹 놓친 경우에](https://code.facebook.com/posts/300798627056246/relicensing-react-jest-flow-and-immutable-js/), React 16을 MIT license 하에서 사용이 가능하다. 또란, 혹 즉시 업그레이드를 할 수 없는 경우를 대비하여 React 15.6.2를 MIT에 게시하였다. 
 
-**새로운 핵심 구조**
+### **새로운 핵심 구조**
 
 React 16은 "Fiber"라는 코드명의 새로운 핵심 구조를 바탕으로 구축된 React의 첫 번쨰 버전이다. 이 프로젝트에 대한 모든 것은 [Facebook 엔지니어링 블로그](https://code.facebook.com/posts/1716776591680069/react-16-a-look-inside-an-api-compatible-rewrite-of-our-frontend-ui-library/)에서 읽을 수 있다. (스포일러: 우리는 React를 새로 썼다!)
 
@@ -104,7 +104,7 @@ Tip: 우측 상단 회전하는 검은색 사각형의 주의하시오.
 
 우리는 비동기 렌더링은 큰 이슈이며 이것이 React의 미래를 대표한다고 생각한다. 가능한 한 원활하게 v16.0으로 마이그레이션하기 위해서는 비동기 기능들이 아직은 많이 활성화되지는 않았지만 이것들을 곧 출시할 수 있을 것이라 기대해 본다.  
 
-**설치**
+## **설치**
 
 npm 레지스트리에 React v16.0.0이 등록되어 있다.
 
@@ -126,14 +126,15 @@ npm install --save react@^16.0.0 react-dom@^16.0.0
 
 [설치 명령에 대해 조금 더 자세히](https://reactjs.org/docs/installation.html) 알고자 한다면 문서를 참조하라.
 
-**업그레이드**
+## **업그레이드**
+
 React 16이 중요한 내부 변화를 포함하고 있다고 하더라도, 업그레이드 측면에서는 다른 주요 React와 다를 바 없다. 우리는 올 해 초 이후로 Facebook과 Messenger.com 사용자에게 React 16을 제공해 왔고, 여러 번의 beta 버전과 릴리즈 후보 버전을 출시하여 추가 문제들을 해결했다. 자그마한 예외들이 있긴 하지만, **여러분들의 앱에 15.6 에서 아무 오류없이 잘 수행된다면, 16에서도 잘 수행할 것이다.**
 
-**제거 예정 (deprecations)**
+### **제거 예정 (deprecations)**
 
 서버 렌더링 컨테이너 하이드레이팅(hydrating)에 대한 명확한 API를 제공한다. 따라서, 만약 여러분이 서버에서 렌더한 HTML을 재사용하고자 한다면, `ReactDOM.render` 대신에 `ReactDOM.hydrate`를 사용하라. 만약 단순한 client 측면의 렌더링이라면, `ReactDOM.render`를 유지하라.
 
-**React Addons**
+### **React Addons**
 
 앞서 발표한 것처럼, 우리는 [React Addon의 지원을 중단했다](https://reactjs.org/blog/2017/04/07/react-v15.5.0.html#discontinuing-support-for-react-addons). 우리는 각 addons(`react-addons-perf`를 제외하고; 아래에서 확인하시오.)의 최신 버전이 가까운 미래에도 동작하기를 기대하지만, 그렇다고 추가적인 제시를 하지는 않을 것이다. 
 
@@ -141,7 +142,7 @@ React 16이 중요한 내부 변화를 포함하고 있다고 하더라도, 업�
 
 `react-addons-perf`는 React 16에서는 더 이상 동작하지 않는다. 앞으로 이 도구의 새 버전을 출시할 가능성이 크다. 그 때까지는 [React 컴포넌트를 프로파일링하기 위해 브라우저의 성능 도구를 사용할 수 있다](https://reactjs.org/docs/optimizing-performance.html#profiling-components-with-the-chrome-performance-tab). 
 
-**변경 사항 요약**
+### **변경 사항 요약**
 
 React 16은 다수의 작은 변경 사항들을 포함한다. 이것들은 오직 보편적이지 않은 경우에만 영향을 미치며, 우리는 이것이 대부분의 앱에 영향이 있다고는 생각하지 않는다.
 
@@ -171,7 +172,7 @@ React 16은 다수의 작은 변경 사항들을 포함한다. 이것들은 오�
 
 * `ReactDOM.unstable_batchedUpdates`는 이제 콜백 이후 추가적인 인수 하나만 사용한다.
 
-**Packaging**
+### **Packaging**
 
 * `react/lib/*`와 `react-dom/lib/*`는 더 이상 존재하지 않는다. CommonJS 환경에서조차 React와 ReactDOM은 단일 파일들("플랫 번들(flat bundles)")로 사전 컴파일된다. 만일 여러분이 이전에 문서화되지 않은 React 내부 자료에 의존하고 있고 그것이 더 이상 동작하지 않는다면, 새 이슈에 대해 구체적인 살례를 알려 준다면 우리는 그것을 마이그레이션 전략에 명시화하도록 노력할 것이다.
 
@@ -191,7 +192,7 @@ React 16은 다수의 작은 변경 사항들을 포함한다. 이것들은 오�
   
   * `react-dom/dist/react-dom.min.js` → `react-dom/umd/react-dom.production.min.js`
 
-**JavaScript 환경 요구사항**
+## **JavaScript 환경 요구사항**
 
 React 16은 컬렉션 타입 [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)과 [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)에 의존한다. 지원하지 않는 구버전 브라우저(예를 들어, IE < 11)와 디바이스를 지원하려면, `core-j` 또는 `babel-polyfill`과 같은 번들 애플리케이션에 전역 polyfill을 포함하도록 고려해야 한다.
 
@@ -218,7 +219,7 @@ global.requestAnimationFrame = function(callback) {
 };
 ```
 
-**감사 인사!**
+## **감사 인사!**
 
 항상 그렇듯이, 이번 릴리즈도 오픈 소스 기여자들이 없었다면 가능하지 않았을 것이다. 버그를 해결하고 PR을 개설하며 이슈를 해결하고 문서를 작성한 모든 이들에게 감사한다!
 
