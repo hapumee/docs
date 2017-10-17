@@ -145,42 +145,51 @@ React 16이 중요한 내부 변화를 포함하고 있다고 하더라도, 업�
 
 React 16은 다수의 작은 변경 사항들을 포함한다. 이것들은 오직 보편적이지 않은 경우에만 영향을 미치며, 우리는 이것이 대부분의 앱에 영향이 있다고는 생각하지 않는다.
 
-- React 15에서는 `unstable_handleError`를 사용한 에러 범위에 대하여 제한적이고 문서화되지 않은 지원이 있었다. 이 메서드는 `componentDidCatch`라는 이름으로 변경되었다. 코드 샘플을 사용하여 [새 API로 자동 마이그레이션 할 수 있다](https://github.com/reactjs/react-codemod#error-boundaries).
+* React 15에서는 `unstable_handleError`를 사용한 에러 범위에 대하여 제한적이고 문서화되지 않은 지원이 있었다. 이 메서드는 `componentDidCatch`라는 이름으로 변경되었다. 코드 샘플을 사용하여 [새 API로 자동 마이그레이션 할 수 있다](https://github.com/reactjs/react-codemod#error-boundaries).
 
-- `ReactDOM.render`와 `ReactDOM.unstable_renderSubtreeIntoContainer`는 lifecycle 메서드 안에서 호출될 때 null을 반환한다. 이런 현상을 회피하기 위해서 [portals](https://github.com/facebook/react/issues/10309#issuecomment-318433235)와 [refs](https://github.com/facebook/react/issues/10309#issuecomment-318434635)를 사용할 수 있다.
+* `ReactDOM.render`와 `ReactDOM.unstable_renderSubtreeIntoContainer`는 lifecycle 메서드 안에서 호출될 때 null을 반환한다. 이런 현상을 회피하기 위해서 [portals](https://github.com/facebook/react/issues/10309#issuecomment-318433235)와 [refs](https://github.com/facebook/react/issues/10309#issuecomment-318434635)를 사용할 수 있다.
 
-- `setState` :
--- null로 `setState`를 호출해도 더 이상 업데이트(update)가 트리거되지는 않는다. 만약 재렌더링(re-render)를 하고 싶다면 업데이터(updater) 기능에서 결정할 수 있다.
--- render에서 `setState`를 직접 호출하는 경우 항상 업데이트(update)가 수행된다. 이것은 이전 버전에서는 수행되지 않았다. 그렇지만, render에서 `setState`를 직접 호출할 때 항상 업데이트가 발생한다 하더라도, render에서 setState를 직접 수행해서는 안 된다.
--- `setState` 콜백(callback) (두 번째 인자)은 모든 컴포넌트가 렌더링된 후에 수행되던 대신에, `componentDidMount`/`componentDidUpdate` 후에 수행된다. 
+* `setState` :
 
-- `<A />`를 `<B />`로 대체할 때, `A.componentWillUnmount` 이전에 `B.componentWillMount`가 항상 먼저 수행된다. 이전에는 이런 경우에는 `A.componentWillUnmount`가 수행되었었다.
+  * null로 `setState`를 호출해도 더 이상 업데이트(update)가 트리거되지는 않는다. 만약 재렌더링(re-render)를 하고 싶다면 업데이터(updater) 기능에서 결정할 수 있다.
+  
+  * render에서 `setState`를 직접 호출하는 경우 항상 업데이트(update)가 수행된다. 이것은 이전 버전에서는 수행되지 않았다. 그렇지만, render에서 `setState`를 직접 호출할 때 항상 업데이트가 발생한다 하더라도, render에서 setState를 직접 수행해서는 안 된다.
+  
+  * `setState` 콜백(callback) (두 번째 인자)은 모든 컴포넌트가 렌더링된 후에 수행되던 대신에, `componentDidMount`/`componentDidUpdate` 후에 수행된다. 
 
-- 이전에는 ref를 컴포넌트로 변경하면 해당 컴포넌트의 렌더링이 호출되지 전에 항상 ref가 분리된다. 이제, DOM에 변경 사항을 적용할 때 나중에 ref를 변경한다. 
+* `<A />`를 `<B />`로 대체할 때, `A.componentWillUnmount` 이전에 `B.componentWillMount`가 항상 먼저 수행된다. 이전에는 이런 경우에는 `A.componentWillUnmount`가 수행되었었다.
 
-- React 이외의 어떤 것에 의해 수정된 컴포넌트 안에서 재렌더링(re-render) 하는 것은 안전하지 않다. 이것은 이전에 몇몇 경우에는 동작했지만 지금은 지원하지 않는다. 이런 경우 경고가 표시된다. 대신 `ReactDOM.unmountComponentAtNode`를 사용하여 컴포넌트 트리를 정리해야 한다. [예제를 보라](https://github.com/facebook/react/issues/10294#issuecomment-318820987)
+* 이전에는 ref를 컴포넌트로 변경하면 해당 컴포넌트의 렌더링이 호출되지 전에 항상 ref가 분리된다. 이제, DOM에 변경 사항을 적용할 때 나중에 ref를 변경한다. 
 
-- `componentDidUpdate` lifecycle은 더 이상 `prevContext` 파라미터를 받지 않는다([#8631](https://github.com/facebook/react/pull/8631)).
+* React 이외의 어떤 것에 의해 수정된 컴포넌트 안에서 재렌더링(re-render) 하는 것은 안전하지 않다. 이것은 이전에 몇몇 경우에는 동작했지만 지금은 지원하지 않는다. 이런 경우 경고가 표시된다. 대신 `ReactDOM.unmountComponentAtNode`를 사용하여 컴포넌트 트리를 정리해야 한다. [예제를 보라](https://github.com/facebook/react/issues/10294#issuecomment-318820987)
 
-- Shallow 렌더러는 더 이상 `componentDidUpdate`를 호출하지 않는다. 왜냐하면 DOM refs가 더 이상 유효하지 않기 때문이다. 이것은 또한 (이전 버전에서도 역시 호출되지는 않았던) `componentDidMount`를 일관되게 만든다.
+* `componentDidUpdate` lifecycle은 더 이상 `prevContext` 파라미터를 받지 않는다([#8631](https://github.com/facebook/react/pull/8631)).
 
-- Shallow 렌더러는 `unstable_batchedUpdates`를 더 이상 구현하지 않는다.
+* Shallow 렌더러는 더 이상 `componentDidUpdate`를 호출하지 않는다. 왜냐하면 DOM refs가 더 이상 유효하지 않기 때문이다. 이것은 또한 (이전 버전에서도 역시 호출되지는 않았던) `componentDidMount`를 일관되게 만든다.
 
-- `ReactDOM.unstable_batchedUpdates`는 이제 콜백 이후 추가적인 인수 하나만 사용한다.
+* Shallow 렌더러는 `unstable_batchedUpdates`를 더 이상 구현하지 않는다.
+
+* `ReactDOM.unstable_batchedUpdates`는 이제 콜백 이후 추가적인 인수 하나만 사용한다.
 
 **Packaging**
-- `react/lib/*`와 `react-dom/lib/*`는 더 이상 존재하지 않는다. CommonJS 환경에서조차 React와 ReactDOM은 단일 파일들("플랫 번들(flat bundles)")로 사전 컴파일된다. 만일 여러분이 이전에 문서화되지 않은 React 내부 자료에 의존하고 있고 그것이 더 이상 동작하지 않는다면, 새 이슈에 대해 구체적인 살례를 알려 준다면 우리는 그것을 마이그레이션 전략에 명시화하도록 노력할 것이다.
 
-- `react-with-addons.js`는 더 이상 존재하지 않는다. 모든 호환 addons은 npm에 독립적으로 게시되어 있고 필요한 경우 단일 파일 브라우저 버전이 있다.
+* `react/lib/*`와 `react-dom/lib/*`는 더 이상 존재하지 않는다. CommonJS 환경에서조차 React와 ReactDOM은 단일 파일들("플랫 번들(flat bundles)")로 사전 컴파일된다. 만일 여러분이 이전에 문서화되지 않은 React 내부 자료에 의존하고 있고 그것이 더 이상 동작하지 않는다면, 새 이슈에 대해 구체적인 살례를 알려 준다면 우리는 그것을 마이그레이션 전략에 명시화하도록 노력할 것이다.
 
-- 15.x에서 소개된 deprecations는 핵심 패키지에서 제거되었다. `React.createClass`는 `create_react-class`로, `React.PropType`은 `prop-types`로, `React.DOM`는 `react-dom-factories`으로, `react-addons-test-utils`는 `react-dom/test-utils`로, 그리고 Shallow 렌더러는 `react-test-renderer/shallow`로 사용 가능하다. 
-- 코드와 자동화 한 샘플 코드의 마이그레이션을 위한 지침은 [15.5.0](https://reactjs.org/blog/2017/04/07/react-v15.5.0.html)과 [15.6.0](https://reactjs.org/blog/2017/06/13/react-v15.6.0.html)을 보라.
+* `react-with-addons.js`는 더 이상 존재하지 않는다. 모든 호환 addons은 npm에 독립적으로 게시되어 있고 필요한 경우 단일 파일 브라우저 버전이 있다.
 
-- 개발과 프로덕트 빌드 사이의 차이점을 강조하기 위해 단일 파일 브라우저 빌드의 이름과 경로가 변경되었다. 예를 들면 아래와 같다.
--- `react/dist/react.js` → `react/umd/react.development.js`
--- `react/dist/react.min.js` → `react/umd/react.production.min.js`
--- `react-dom/dist/react-dom.js` → `react-dom/umd/react-dom.development.js`
--- `react-dom/dist/react-dom.min.js` → `react-dom/umd/react-dom.production.min.js`
+* 15.x에서 소개된 deprecations는 핵심 패키지에서 제거되었다. `React.createClass`는 `create_react-class`로, `React.PropType`은 `prop-types`로, `React.DOM`는 `react-dom-factories`으로, `react-addons-test-utils`는 `react-dom/test-utils`로, 그리고 Shallow 렌더러는 `react-test-renderer/shallow`로 사용 가능하다. 
+
+* 코드와 자동화 한 샘플 코드의 마이그레이션을 위한 지침은 [15.5.0](https://reactjs.org/blog/2017/04/07/react-v15.5.0.html)과 [15.6.0](https://reactjs.org/blog/2017/06/13/react-v15.6.0.html)을 보라.
+
+* 개발과 프로덕트 빌드 사이의 차이점을 강조하기 위해 단일 파일 브라우저 빌드의 이름과 경로가 변경되었다. 예를 들면 아래와 같다.
+
+  * `react/dist/react.js` → `react/umd/react.development.js`
+  
+  * `react/dist/react.min.js` → `react/umd/react.production.min.js`
+  
+  * `react-dom/dist/react-dom.js` → `react-dom/umd/react-dom.development.js`
+  
+  * `react-dom/dist/react-dom.min.js` → `react-dom/umd/react-dom.production.min.js`
 
 **JavaScript 환경 요구사항**
 
