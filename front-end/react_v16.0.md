@@ -156,9 +156,17 @@ React 16은 다수의 작은 변경 사항들을 포함한다. 이것들은 오�
 
 - `<A />`를 `<B />`로 대체할 때, `A.componentWillUnmount` 이전에 `B.componentWillMount`가 항상 먼저 수행된다. 이전에는 이런 경우에는 `A.componentWillUnmount`가 수행되었었다.
 
-- 이전에는, 
+- 이전에는 ref를 컴포넌트로 변경하면 해당 컴포넌트의 렌더링이 호출되지 전에 항상 ref가 분리된다. 이제, DOM에 변경 사항을 적용할 때 나중에 ref를 변경한다. 
 
+- React 이외의 어떤 것에 의해 수정된 컴포넌트 안에서 재렌더링(re-render) 하는 것은 안전하지 않다. 이것은 이전에 몇몇 경우에는 동작했지만 지금은 지원하지 않는다. 이런 경우 경고가 표시된다. 대신 `ReactDOM.unmountComponentAtNode`를 사용하여 컴포넌트 트리를 정리해야 한다. [예제를 보라](https://github.com/facebook/react/issues/10294#issuecomment-318820987)
 
+- `componentDidUpdate` lifecycle은 더 이상 `prevContext` 파라미터를 받지 않는다([#8631](https://github.com/facebook/react/pull/8631)).
 
+- Shallow 렌더러는 더 이상 `componentDidUpdate`를 호출하지 않는다. 왜냐하면 DOM refs가 더 이상 유효하지 않기 때문이다. 이것은 또한 (이전 버전에서도 역시 호출되지는 않았던) `componentDidMount`를 일관되게 만든다.
 
-null로 setState를 호출하면 (자), 더 이상 갱신이 트리거되지 않습니다. 이렇게하면 다시 렌더링하려는 경우 업데이터 기능에서 결정할 수 있습니다. 
+- Shallow 렌더러는 `unstable_batchedUpdates`를 더 이상 구현하지 않는다.
+
+- `ReactDOM.unstable_batchedUpdates`는 이제 콜백 이후 추가적인 인수 하나만 사용한다.
+
+*Packaging*
+
