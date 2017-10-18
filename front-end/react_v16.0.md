@@ -97,7 +97,7 @@ Fiber는 React 16에서 에러 범위나 fragment와 같은 거의 대부분의 
 
 아래의 데모에서 비동기 렌더링으로 해결할 수 있는 문제의 유형에 대해 살펴볼 수 있다.
 
-![async rendering](https://twitter.com/acdlite/status/909926793536094209)
+[async rendering demo](https://twitter.com/acdlite/status/909926793536094209)
 
 *Tip: 우측 상단 회전하는 검은색 사각형의 주의하시오.*
 
