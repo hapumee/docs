@@ -1,8 +1,8 @@
 # React v16.0
 *translated* *by* *Hapumee*
 
-React v16.0의 릴리즈를 알릴 수 있게 되어 무척 기쁘다. 오랜 요구사항이었던 fragments, error, boundaries, portals를 포함하여
-, 사용자 정의 DOM 속성을 지원하고, server-side 렌더링을 개선하며, 파일 사이즈로 감소하였다.
+React v16.0의 릴리즈를 알릴 수 있게 되어 무척 기쁘다. 오랜 요구사항이었던 fragments, 에러 범위 (error boundaries), portals를 포함하여
+, 사용자 정의 DOM 속성을 지원하고, server-side 렌더링을 개선하며, 파일 사이즈도 감소하였다.
 
 ### **render의 새로운 반환 타입: fragments와 strings**
 
@@ -30,7 +30,7 @@ render() {
 }
 ```
 
-[여기에서 지원하는 모든 반환 형태를 확인할 수 있다.](https://reactjs.org/docs/react-component.html#render)
+[여기를 클릭하여 지원하는 모든 반환 형태를 확인할 수 있다.](https://reactjs.org/docs/react-component.html#render)
 
 ### **개선된 오류 처리**
 
@@ -55,29 +55,29 @@ render() {
 }
 ```
 
-전체 예제는 [protals 문서에서 확인할 수 있다].(https://reactjs.org/docs/portals.html)
+전체 예제는 [protals 문서에서 확인할 수 있다](https://reactjs.org/docs/portals.html).
 
 ### **개선된 server-side 렌더링**
 
-React 16은 완전하게 새로 작성된 서버 renderer가 포함되었다. 또한 많이 빨라졌다. *streaming*을 지원함으로써 바이트를 조금 더 빠르게 client에 전달할 수 있다. 그리고 `process.env` 체크를 컴파일 하는 [새로운 패키징 전략] 덕분으로 (Node에서 `process.env`를 읽는 것은 정말 느리다!) 더 좋은 서버 렌더링 성능을 얻기 위한 React bundling의 필요가 없어졌다.  
+React 16은 완전하게 새로 작성된 서버 renderer가 포함되었다. 또한 많이 빨라졌다. *streaming*을 지원함으로써 바이트를 조금 더 빠르게 client에 전달할 수 있다. 그리고 `process.env` 체크를 컴파일 하는 [새로운 패키징 전략](https://reactjs.org/blog/2017/09/26/react-v16.0.html#reduced-file-size) 덕분으로 (Node에서 `process.env`를 읽는 것은 정말 느리다!) 더 좋은 서버 렌더링 성능을 얻기 위한 React bundling의 필요가 없어졌다.  
 
-코어팀 멤버인 Sasha Aickin이 [React 16의 SSR 향상에 대한 아티클]을 작성하였다. Sasha의 종합적인 벤치마킹에 의하면, React 16에서의 서버 렌더링이 React 15에서의 서버 렌더링에 비해 약 *3배 더 빠르다*고 한다. "`process.env` 컴파일과 React 15를 비교해 볼 떄, Node 4 기준으로 2.4배, Node 6 기준으로 3배, Node 8.4 릴리즈 기준으로는 3.8배의 성능 향상을 보인다. 그리고 컴파일 없이 React 15와 비교해 볼 때는 React 16은 Node 최신 버전에서 SSR 전체의 큰 이득을 얻을 수 있다." (Sasha의 지적과 같이, 이 수치들은 종합적인 벤치마킹을 기반으로 하는 수치이며, 실제 성능을 반영하지 않을 수도 있음을 알고 있자.) 
+코어팀 멤버인 Sasha Aickin이 [React 16의 SSR 향상에 대한 아티클](https://hackernoon.com/whats-new-with-server-side-rendering-in-react-16-9b0d78585d67)을 작성하였다. Sasha의 종합적인 벤치마킹에 의하면, React 16에서의 서버 렌더링이 React 15에서의 서버 렌더링에 비해 약 *3배 더 빠르다*고 한다. "`process.env` 컴파일과 React 15를 비교해 볼 떄, Node 4 기준으로 2.4배, Node 6 기준으로 3배, Node 8.4 릴리즈 기준으로는 3.8배의 성능 향상을 보인다. 그리고 컴파일 없이 React 15와 비교해 볼 때는 React 16은 Node 최신 버전에서 SSR 전체의 큰 이득을 얻을 수 있다." (Sasha의 지적과 같이, 이 수치들은 종합적인 벤치마킹을 기반으로 하는 수치이며, 실제 성능을 반영하지 않을 수도 있음을 알고 있자.) 
 
-더불어, React 16은 서버 렌더링된 HTML을 client로 전달할 때 사용하는 것이 좋다. 더 이상 초기 렌더링은 서버의 결과과 정확하게 일치시킬 필요가 없어졌다. 대신, 가급적이면 기존 DOM을 최대한 재사용하려는 시도를 한다. 체크섬은 더 이상 필요하지 않다. 일반적으로, 서버 대 클라이언트에서 서로 다른 컨텐츠를 렌더링 하는 것을 권장하지 않지만, 어떤 경우에는 유용하기도 하다 (예를 들면, temostamps). *그러나, 서버에 누락된 노드가 존재하는 것은 위험할 수 있다. 왜냐하면 누락된 노드가 잘못된 속성으로 다시 노드를 만들 수 있기 떄문이다.*
+더불어, React 16은 서버 렌더링된 HTML을 client로 전달할 때 사용하는 것이 좋다. 더 이상 초기 렌더링은 서버의 결과과 정확하게 일치시킬 필요가 없어졌다. 대신, 가급적이면 기존 DOM을 최대한 재사용하려는 시도를 한다. 체크섬은 더 이상 필요하지 않다. 일반적으로, 서버 대 클라이언트에서 서로 다른 컨텐츠를 렌더링 하는 것을 권장하지 않지만, 어떤 경우에는 유용하기도 하다 (예를 들면, timestamps). **그러나, 서버에 누락된 노드가 존재하는 것은 위험할 수 있다. 왜냐하면 누락된 노드가 잘못된 속성으로 다시 노드를 만들 수 있기 때문이다.**
 
 조금 더 자세한 사항은 [ReactDOMServer 문서](https://reactjs.org/docs/react-dom-server.html)에서 확인할 수 있다.
 
 ### **사용자 정의 DOM 속성의 지원**
 
-기존에는 인식할 수 없는 HTML과 SVG 속성들을 무시였으나, React 16에서는 그것들을 DOM으로 전달한다. 이것은 우리가 React의 허용 속성 목록을 제거하고 파일 사이즈를 줄이는 데에 도움이 되었다.
+기존에는 인식할 수 없는 HTML과 SVG 속성들을 무시였으나, React 16에서는 [그것들을 DOM으로 전달](https://reactjs.org/blog/2017/09/08/dom-attributes-in-react-16.html)한다. 이것은 우리가 React의 허용 속성 목록을 제거하고 파일 사이즈를 줄이는 데에 도움이 되었다.
 
 ### **감소된 파일 사이즈**
 
-이러한 모든 추가적인 작업에도 불구하고 React 16은 15.6.1 버전에 비하면 사실상 매우 작다.
+이러한 모든 추가적인 작업에도 불구하고 React 16은 15.6.1 버전에 비하면 사실상 **작아졌다**.
 
-`react`의 사이즈는 20.7kb(압축의 경우 6.9kb)에서 5.3kb(압축의 경우 2,2kb)로 감소하였다.
-`react-dom`의 사이즈는 141kb(압축의 경우 42.9kb)에서 103.7kb(압축의 경우 32.6kb)로 감소하였다.
-`react`와 `react-dom`을 합치면 그 사이즈는 161.7kb(압축의 경우 49.8kb)에서 109kb(압축의 경우 34.8kb)로 감소하였다.
+* `react`의 사이즈는 20.7kb(압축의 경우 6.9kb)에서 5.3kb(압축의 경우 2,2kb)로 감소하였다.
+* `react-dom`의 사이즈는 141kb(압축의 경우 42.9kb)에서 103.7kb(압축의 경우 32.6kb)로 감소하였다.
+* `react`와 `react-dom`을 합치면 그 사이즈는 161.7kb(압축의 경우 49.8kb)에서 109kb(압축의 경우 34.8kb)로 감소하였다.
 
 **이전 버전에 비해 총 파일 사이즈는 32%(압축의 경우 30%) 감소하였다.**
 
@@ -89,18 +89,17 @@ React 16은 완전하게 새로 작성된 서버 renderer가 포함되었다. �
 
 ### **새로운 핵심 구조**
 
-React 16은 "Fiber"라는 코드명의 새로운 핵심 구조를 바탕으로 구축된 React의 첫 번쨰 버전이다. 이 프로젝트에 대한 모든 것은 [Facebook 엔지니어링 블로그](https://code.facebook.com/posts/1716776591680069/react-16-a-look-inside-an-api-compatible-rewrite-of-our-frontend-ui-library/)에서 읽을 수 있다. (스포일러: 우리는 React를 새로 썼다!)
+React 16은 "Fiber"라는 코드명의 새로운 핵심 구조를 바탕으로 구축된 React의 첫 번째 버전이다. 이 프로젝트에 대한 모든 것은 [Facebook 엔지니어링 블로그](https://code.facebook.com/posts/1716776591680069/react-16-a-look-inside-an-api-compatible-rewrite-of-our-frontend-ui-library/)에서 읽을 수 있다. (스포일러: 우리는 React를 새로 썼다!)
 
 Fiber는 React 16에서 에러 범위나 fragment와 같은 거의 대부분의 새로운 구조를 담당하고 있다. 다음의 몇 릴리즈에서 React의 숨겨진 잠재력을 최대 끌어내기 위한 더 많은 새로운 기능들을 기대할 수 있다.
 
-아마도 우리가 작업하고 있는 가장 흥미로운 부분은 *비동기 렌더링*일 것이다. 말하자면, 브라우저에서 주기적으로 실행함으로써 렌더링 작업을 공동으로 예약하는 전략이다. React는 메인 스레드(main thread)를 차단하지는 않기 떄문에, 결과적으로 비동기 렌더링에서는 애플리케이션의 응답이 향상되었다.
+아마도 우리가 작업하고 있는 가장 흥미로운 부분은 **비동기 렌더링**일 것이다. 말하자면, 브라우저에서 주기적으로 실행함으로써 렌더링 작업을 공동으로 예약하는 전략이다. React는 메인 스레드(main thread)를 차단하지는 않기 떄문에, 결과적으로 비동기 렌더링에서는 애플리케이션의 응답이 향상되었다.
 
 아래의 데모에서 비동기 렌더링으로 해결할 수 있는 문제의 유형에 대해 살펴볼 수 있다.
 
-![async rendering]
-(https://twitter.com/acdlite/status/909926793536094209)
+![async rendering](https://twitter.com/acdlite/status/909926793536094209)
 
-Tip: 우측 상단 회전하는 검은색 사각형의 주의하시오.
+*Tip: 우측 상단 회전하는 검은색 사각형의 주의하시오.*
 
 우리는 비동기 렌더링은 큰 이슈이며 이것이 React의 미래를 대표한다고 생각한다. 가능한 한 원활하게 v16.0으로 마이그레이션하기 위해서는 비동기 기능들이 아직은 많이 활성화되지는 않았지만 이것들을 곧 출시할 수 있을 것이라 기대해 본다.  
 
