@@ -108,17 +108,17 @@ Fiber는 React 16에서 에러 범위나 fragment와 같은 거의 대부분의 
 npm 레지스트리에 React v16.0.0이 등록되어 있다.
 
 아래는 Yarn을 이용한 React 16 설치 방법이다.
-```javascript
+```
 yarn add react@^16.0.0 react-dom@^16.0.0
 ```
 
 아래는 npm을 이용한 React 16 설치 방법이다.
-```javascript
+```
 npm install --save react@^16.0.0 react-dom@^16.0.0
 ```
 
 또한, CDN을 통한 React UMD 빌드도 제공한다.
-```javascript
+```
 <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
 ```
